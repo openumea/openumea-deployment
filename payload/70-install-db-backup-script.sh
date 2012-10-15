@@ -12,7 +12,7 @@ set -e
 # Create filenme first, thus the date can change if we dump large amounts of data.
 FILENAME="/root/backup/ckan-\`date +%Y%m%d-%H:%M\`.pg_dump"
 
-$CKAN_VENV/bin/paster --plugin=ckan db dump $FILENAME --config=$CKAN_CONFIG
+$CKAN_VENV/bin/paster --plugin=ckan db dump $FILENAME --config=$CKAN_CFG
 EOS
 
 # should we archive?
