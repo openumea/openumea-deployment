@@ -1,3 +1,4 @@
 .validate_cloud_config
 .validate_shell
 combined-userdata.gz
+nocloud.iso
