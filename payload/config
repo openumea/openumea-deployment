@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Common config file, that gets sourced by others.
+
+# fetch our external hostname from ec2 metadata.
+EXTERNAL_HOSTNAME=$(curl --connect-timeout 1 --silent http://169.254.169.254/latest/meta-data/public-hostname)
+
+# And if we timeout, eg. non-ec2 instance, we just use our "internal"
+if [ "$EXTERNAL_HOSTNAME" = "" ] ; then
+	EXTERNAL_HOSTNAME=$HOSTNAME
+fi
+
+# cloud-init doesn't set HOME, so set it
+export HOME=$(getent passwd $(id -u) | cut -d: -f 6)
+
+# Email settings
+RECIPENT_EMAIL_ADDRESS=anton@dohi.se
+#RECIPENT_EMAIL_ADDRESS=support@openumea.se
+SENDER_EMAIL_ADRESS=ckan-root@openumea.se
+#EMAIL_CREDENTIALS=XXXXXXXXXXXXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+#RELAY_HOST=email-smtp.us-east-1.amazonaws.com:587
+
+# Where cloud data is stored
+CLOUD_DATA=/var/lib/cloud/data/datafiles
+mkdir -p $CLOUD_DATA
+
+# What shall we call this ckan instance?
+CKAN_HOSTNAME=ckan-test.openumea.se
+
+# Where is the ckan root?
+CKAN_ROOT=/var/www/ckan
+CKAN_VENV=$CKAN_ROOT/pyenv
+
+# What shall we call the ckan cfg file?
+# DEFAULT: development.ini
+CKAN_CFG=$CKAN_ROOT/development.ini
+
+# What db-backup should we restore?
+#CKAN_BACKUP=...
+
+# or, if we are not restoring a backup, create a initial systadmin:
+CKAN_SYSADMIN_USER=anton
+CKAN_SYSADMIN_PW=anton

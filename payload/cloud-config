@@ -1,0 +1,112 @@
+#cloud-config
+#XXX: cloud-config is pritty useless, should we convert this allso into a script?
+# Provide debconf answers / debian preseed values
+#
+# See debconf-set-selections man page.
+#
+# Default: none
+#
+debconf_selections: |     # Need to perserve newlines
+  # Force debconf priority to critical.
+  debconf debconf/priority select critical
+
+  # Override default frontend to readline, but allow user to select.
+  debconf debconf/frontend select readline
+  debconf debconf/frontend seen false
+
+  # Set timezone
+  tzdata tzdata/Zones/Etc select UTC
+  tzdata tzdata/Zones/Europe select Stockholm
+  tzdata tzdata/Areas select Europe
+
+# Install additional packages on first boot
+#
+# Default: none
+#
+# if packages are specified, this apt_update will be set to true
+#
+packages:
+ - pwgen
+ - pastebinit
+ - ntp
+
+# runs last, after all other scripts
+runcmd:
+# create missing log dir for upstart
+ - [ mkdir, -p, /var/log/upstart ]
+# make the tzdata changes bite
+ - [ sh, -ce, "echo Europe/Stockholm > /etc/timezone" ]
+ - [ dpkg-reconfigure, --priority, critical, tzdata ]
+# disable landscape
+ - [ landscape-config, --disable ]
+# Have popularity contest shut up (generate /etc/popularity-contest.conf)
+ - [ dpkg-reconfigure, --priority, high, popularity-contest ]
+# enable unattended-upgrades:
+ - [ sh, -ce, "echo APT::Periodic::Unattended-Upgrade \"1\"\\; > /etc/apt/apt.conf.d/01-enable-unattended" ]
+# and run it
+ - [ unattended-upgrades ]
+
+# We do it from a runcmd and unattended-upgrade instead.
+# Update apt database on first boot
+# (ie run apt-get update)
+#
+# Default: true
+#
+#apt_update: true
+
+# Upgrade the instance on first boot
+# (ie run apt-get upgrade)
+#
+# Default: false
+#
+#apt_upgrade: true
+
+# E_NOT_IMPL.
+# Use a more "traditional" approach, down in runcmd:
+## enable unattended-upgrades:
+#apt_conf:
+## Creates an apt proxy configuration in /etc/apt/apt.conf.d/01-enable-unattended
+# - filename: "01-enable-unattended"
+#   content: |
+#    APT::Periodic::Unattended-Upgrade "1";
+
+# E_NOT_IMPL AS OF lucid
+#hostname: "cloud-init-templated"
+
+# E_NOT_IMPL AS OF lucid
+# resize_rootfs should the / filesytem be resized on first boot
+# this allows you to launch an instance with a larger disk / partition
+# and have the instance automatically grow / to accomoddate it
+# set to 'False' to disable
+#resize_rootfs: True
+
+# E_NOT_IMPL AS OF lucid
+# final_message
+# default: cloud-init boot finished at $TIMESTAMP. Up $UPTIME seconds
+# this message is written by cloud-final when the system is finished
+# its first boot
+#final_message: "The system is finally up, after $UPTIME seconds"
+
+# E_NOT_IMPL AS OF lucid
+# timezone: set the timezone for this instance
+# the value of 'timezone' must exist in /usr/share/zoneinfo
+#timezone: Europe/Stockholm
+
+# E_NOT_IMPL AS OF lucid
+# configure where output will go
+# 'output' entry is a dict with 'init', 'config', 'final' or 'all'
+# entries.  Each one defines where
+#  cloud-init, cloud-config, cloud-config-final or all output will go
+# each entry in the dict can be a string, list or dict.
+#  if it is a string, it refers to stdout and stderr
+#  if it is a list, entry 0 is stdout, entry 1 is stderr
+#  if it is a dict, it is expected to have 'output' and 'error' fields
+# default is to write to console only
+# the special entry "&1" for an error means "same location as stdout"
+#  (Note, that '&1' has meaning in yaml, so it must be quoted)
+#output:
+# init: "> /var/log/my-cloud-init.log"
+# config: [ ">> /tmp/foo.out", "> /tmp/foo.err" ]
+# final:
+#   output: "| tee /tmp/final.stdout | tee /tmp/bar.stdout"
+#   error: "&1"
