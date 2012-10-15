@@ -38,5 +38,9 @@ cat >> /etc/apache2/sites-available/ckan <<EOC
 </VirtualHost>
 EOC
 
+# disable default site and enable ckan
 a2dissite default
 a2ensite ckan
+
+# reload config to have it bite
+/etc/init.d/apache2 reload
