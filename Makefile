@@ -26,7 +26,7 @@ nocloud.iso: combined-userdata.gz
 	echo "local-hostname: ckan-test" > nocloud/meta-data
 	(cd nocloud ; genisoimage -output ../$@ -volid cidata -joliet -rock *)
 	rm -rf nocloud
-	scp nocloud.iso test.dohi.se:/var/lib/libvirt/images/
+	scp nocloud.iso vmserver1.lan:/var/lib/libvirt/images/
 
 strunt:
 	#$(CLOUD_GEN): $(CLOUD) 
