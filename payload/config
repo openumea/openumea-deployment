@@ -41,6 +41,9 @@ CKAN_CFG=$CKAN_ROOT/development.ini
 # To what bucket should we do backup's?
 DB_BACKUP_S3_BUCKET=openumea-backup
 
+# In what bucket do we store our files?
+CKAN_STORAGE_BUCKET=ckan-test-bucket
+
 # or, if we are not restoring a backup, create a initial systadmin:
 CKAN_SYSADMIN_USER=anton
 CKAN_SYSADMIN_PW=anton
