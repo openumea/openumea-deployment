@@ -17,7 +17,7 @@ EOS
 
 # should we archive?
 if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
-	cat > /root/backup/backup-db.sh <<EOS
+	cat >> /root/backup/backup-db.sh <<EOS
 
 # and save it to s3
 $CKAN_VENV/bin/s3put -b $DB_BACKUP_S3_BUCKET \$FILENAME
