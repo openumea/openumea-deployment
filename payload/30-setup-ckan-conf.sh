@@ -10,4 +10,4 @@ mkdir data sstore
 chown www-data . data sstore
 
 # Config hostname
-perl -pi -e "s/^ckan.site_url.*$/ckan.site_url = $CKAN_HOSTNAME/" $CKAN_CFG
+perl -pi -e "s,^ckan.site_url.*$,ckan.site_url = http://$CKAN_HOSTNAME/," $CKAN_CFG
