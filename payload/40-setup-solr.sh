@@ -7,8 +7,13 @@ ln -s $CKAN_VENV/src/ckan/ckan/config/solr/schema-1.4.xml /etc/solr/conf/schema.
 perl -pi -e '
 s/^.*NO_START.+$/NO_START=0/;
 s/^.*JETTY_HOST.+$/JETTY_HOST=127.0.0.1/;
-s/^.*JETTY_PORT=.+$/JETTY_PORT=8983/;
-s,^.*JAVA_HOME=.+,JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64/,;' /etc/default/jetty
+s/^.*JETTY_PORT=.+$/JETTY_PORT=8983/;' /etc/default/jetty
+
+cat >> /etc/default/jetty <<EOS
+
+# define which java to use
+JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64/
+EOS
 
 /etc/init.d/jetty start
 
