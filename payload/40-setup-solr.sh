@@ -11,3 +11,5 @@ s/^.*JETTY_PORT=.+$/JETTY_PORT=8983/;
 s,^.*JAVA_HOME=.+,JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64/,;' /etc/default/jetty
 
 /etc/init.d/jetty start
+
+perl -pi -e 's,^.*solr_url.*$,solr_url = http://127.0.0.1:8983/solr,' $CKAN_CFG
