@@ -9,6 +9,8 @@ $CKAN_VENV/bin/pip install --ignore-installed -r $CKAN_VENV/src/ckan/pip-require
 $CKAN_VENV/bin/pip install git+https://github.com/boto/boto#egg=boto
 
 # OPTIONAL
-#$CKAN_VENV/bin/pip install Celery
+#$CKAN_VENV/bin/pip install celery
+
+# plugins
 #$CKAN_VENV/bin/pip install -e git+git://github.com/okfn/ckanext-datastorer.git#egg=ckanext-datastorer
 #$CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-datastorer/pip-requirements.txt
