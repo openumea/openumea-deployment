@@ -36,6 +36,7 @@ CKAN_VENV=$CKAN_ROOT/pyenv
 CKAN_CFG=$CKAN_ROOT/development.ini
 
 # What db-backup should we restore?
+# Use http/https signed url to s3 or s3://bucket/key..
 #CKAN_BACKUP=...
 
 # To what bucket should we do backup's?

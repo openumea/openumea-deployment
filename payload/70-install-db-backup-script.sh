@@ -31,7 +31,7 @@ if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
 
 # and save it to s3
 # FIXME: using s3multiput until merge of s3put/s3multiput is done for --key_prefix
-$CKAN_VENV/bin/s3multiput --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME \$FILENAME
+$CKAN_VENV/bin/s3multiput --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
 
 # and cleanup
 rm \$FILENAME
