@@ -1,26 +1,33 @@
 #!/bin/bash
 . $(dirname $0)/config
 
-mkdir -p /root/backup
+# backup dir
+BACKUP_DIR=/root/backup
+mkdir -p $BACKUP_DIR
 
 # Create backup script
-cat > /root/backup/backup-db.sh <<EOS
+cat > $BACKUP_DIR/backup-db.sh <<EOS
 #!/bin/sh
 
 set -e
 
 # Create filenme first, thus the date can change if we dump large amounts of data.
-FILENAME="/root/backup/ckan-\`date +%Y%m%d-%H:%M\`.pg_dump"
+FILENAME="$BACKUP_DIR/ckan-\`date +%Y%m%d-%H:%M\`.pg_dump"
 
-$CKAN_VENV/bin/paster --plugin=ckan db dump $FILENAME --config=$CKAN_CFG
+$CKAN_VENV/bin/paster --plugin=ckan db dump \$FILENAME --config=$CKAN_CFG | grep -v 'Dumped database to:'
+
+# compress dump
+gzip -9 $FILENAME
+FILENAME=$FILENAME.gz
 EOS
 
 # should we archive?
 if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
-	cat >> /root/backup/backup-db.sh <<EOS
+	cat >> $BACKUP_DIR/backup-db.sh <<EOS
 
 # and save it to s3
-$CKAN_VENV/bin/s3put -b $DB_BACKUP_S3_BUCKET \$FILENAME
+# FIXME: using s3multiput until merge of s3put/s3multiput is done for --key_prefix
+$CKAN_VENV/bin/s3multiput --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME \$FILENAME
 
 # and cleanup
 rm \$FILENAME
@@ -28,14 +35,14 @@ EOS
 fi
 
 # make it fly
-chmod +x /root/backup/backup-db.sh
+chmod +x $BACKUP_DIR/backup-db.sh
 
 # make it run
 TMP=$(mktemp)
 crontab -u root -l > $TMP
 cat >> $TMP <<EOC
 # m h  dom mon dow   command
-*/30 * *   *   *     /root/backup/backup-db.sh
+*/30 * *   *   *     $BACKUP_DIR/backup-db.sh
 EOC
 crontab -u root $TMP
 rm $TMP
