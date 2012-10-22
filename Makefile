@@ -19,7 +19,7 @@ combined-userdata.gz: $(GEN) $(PAYLOAD)
 	fi
 
 clean:
-	rm -f combined-userdata.gz nocloud.iso $(GEN)
+	rm -f combined-userdata.gz nocloud.iso meta-data user-data $(GEN)
 
 #XXX: validate shellscripts?
 .validate_shell: $(PAYLOAD)

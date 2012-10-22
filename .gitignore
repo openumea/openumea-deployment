@@ -2,3 +2,5 @@
 .validate_shell
 combined-userdata.gz
 nocloud.iso
+user-data
+meta-data
