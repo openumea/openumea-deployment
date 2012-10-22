@@ -1,6 +1,9 @@
 #!/bin/bash
 . $(dirname $0)/config
 
+# "dirty down" the right place
+cd $CKAN_ROOT
+
 # Should we restore db from backup?
 if [ ! -z "$CKAN_BACKUP" ] ; then
 	# download backup?
@@ -12,7 +15,7 @@ if [ ! -z "$CKAN_BACKUP" ] ; then
 	# uncompress
 	if [[ "$CKAN_BACKUP" = *".gz" ]] ; then
 		gunzip $CKAN_BACKUP
-		CKAN_BACKUP=$(echo $CKAN_BACKUP | sed -ie 's/\.gz$//')
+		CKAN_BACKUP=$(echo $CKAN_BACKUP | sed -e 's/\.gz$//')
 	fi
 	# load db dump
 	$CKAN_VENV/bin/paster --plugin=ckan db load --file=$CKAN_BACKUP --config=$CKAN_CFG
