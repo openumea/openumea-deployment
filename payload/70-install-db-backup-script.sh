@@ -5,20 +5,24 @@
 BACKUP_DIR=/root/backup
 mkdir -p $BACKUP_DIR
 
+# XXX: for s3multiput
+$CKAN_VENV/bin/pip install filechunkio
+
 # Create backup script
 cat > $BACKUP_DIR/backup-db.sh <<EOS
 #!/bin/sh
 
+# abort on error
 set -e
 
 # Create filenme first, thus the date can change if we dump large amounts of data.
 FILENAME="$BACKUP_DIR/ckan-\`date +%Y%m%d-%H:%M\`.pg_dump"
 
-$CKAN_VENV/bin/paster --plugin=ckan db dump \$FILENAME --config=$CKAN_CFG | grep -v 'Dumped database to:'
+$CKAN_VENV/bin/paster --plugin=ckan db dump \$FILENAME --config=$CKAN_CFG | grep -v 'Dumped database to:' ||:
 
 # compress dump
-gzip -9 $FILENAME
-FILENAME=$FILENAME.gz
+gzip -9 \$FILENAME
+FILENAME=\$FILENAME.gz
 EOS
 
 # should we archive?
