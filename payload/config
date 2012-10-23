@@ -14,9 +14,8 @@ fi
 export HOME=$(getent passwd $(id -u) | cut -d: -f 6)
 
 # Email settings
-RECIPENT_EMAIL_ADDRESS=anton@dohi.se
-#RECIPENT_EMAIL_ADDRESS=support@openumea.se
-SENDER_EMAIL_ADRESS=ckan-root@openumea.se
+RECIPENT_EMAIL_ADDRESS=sysadm
+SENDER_EMAIL_ADRESS=root@domain
 #EMAIL_CREDENTIALS=XXXXXXXXXXXXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 #RELAY_HOST=email-smtp.us-east-1.amazonaws.com:587
 
@@ -25,7 +24,7 @@ CLOUD_DATA=/var/lib/cloud/data/datafiles
 mkdir -p $CLOUD_DATA
 
 # What shall we call this ckan instance?
-CKAN_HOSTNAME=ckan-test.openumea.se
+CKAN_HOSTNAME="FIXME"
 
 # Where is the ckan root?
 CKAN_ROOT=/var/www/ckan
@@ -35,16 +34,16 @@ CKAN_VENV=$CKAN_ROOT/pyenv
 # DEFAULT: development.ini
 CKAN_CFG=$CKAN_ROOT/development.ini
 
+# To what bucket should we do backup's?
+#DB_BACKUP_S3_BUCKET=
+
 # What db-backup should we restore?
 # Use http/https signed url to s3 or s3://bucket/key..
-#CKAN_BACKUP=...
-
-# To what bucket should we do backup's?
-DB_BACKUP_S3_BUCKET=openumea-backup
+#CKAN_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/ckan-YYYYMMDD-HH:MM.pg_dump.gz"
 
 # In what bucket do we store our files?
-CKAN_STORAGE_BUCKET=ckan-test-bucket
+#CKAN_STORAGE_BUCKET=
 
 # or, if we are not restoring a backup, create a initial systadmin:
-CKAN_SYSADMIN_USER=anton
-CKAN_SYSADMIN_PW=anton
+CKAN_SYSADMIN_USER=sysadm
+CKAN_SYSADMIN_PW=sysadm
