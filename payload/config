@@ -14,8 +14,8 @@ fi
 export HOME=$(getent passwd $(id -u) | cut -d: -f 6)
 
 # Email settings
-RECIPENT_EMAIL_ADDRESS=root@localhost
-#SENDER_EMAIL_ADDRESS=ckan@$EXTERNAL_HOSTNAME
+RECIPENT_EMAIL_ADDRESS=anton@dohi.se
+SENDER_EMAIL_ADDRESS=ckan-root@openumea.se
 #EMAIL_CREDENTIALS=XXXXXXXXXXXXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 #RELAY_HOST=email-smtp.us-east-1.amazonaws.com:587
 
@@ -24,7 +24,7 @@ CLOUD_DATA=/var/lib/cloud/data/datafiles
 mkdir -p $CLOUD_DATA
 
 # What shall we call this ckan instance?
-CKAN_HOSTNAME="FIXME"
+CKAN_HOSTNAME=ckan.openumea.se
 
 # Where is the ckan root?
 CKAN_ROOT=/var/www/ckan
@@ -38,18 +38,18 @@ CKAN_CFG=$CKAN_ROOT/development.ini
 #CKAN_THEME=openumea-theme
 
 # To what bucket should we do backup's?
-#DB_BACKUP_S3_BUCKET=
+DB_BACKUP_S3_BUCKET="openumea-backups"
 
 # What db-backup should we restore?
 # Use http/https signed url to s3 or s3://bucket/key..
-#CKAN_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/ckan-YYYYMMDD-HH:MM.pg_dump.gz"
+CKAN_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/ckan-YYYYMMDD-HH:MM.pg_dump.gz"
 
 # In what bucket do we store our files?
-#CKAN_STORAGE_BUCKET=
+CKAN_STORAGE_BUCKET=openumea-storage
 
 # or, if we are not restoring a backup, create a initial systadmin:
-CKAN_SYSADMIN_USER=sysadm
-CKAN_SYSADMIN_PW=sysadm
+#CKAN_SYSADMIN_USER=sysadm
+#CKAN_SYSADMIN_PW=sysadm
 
 # From what repo should we fetch cronjobs?
 CRONJOBS_REPO=openumea-cronjobs
