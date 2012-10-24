@@ -1,6 +1,9 @@
 #!/bin/bash
 . $(dirname $0)/config
 
+# Google analytics
+perl -pi -e "s#^.*ckan.template_footer_end.*\$#ckan.template_footer_end = <script type=\"text/javascript\"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-32331168-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script>#" $CKAN_CFG
+
 if [ "$CKAN_THEME" = "" ] ; then
 	exit 0;
 fi
