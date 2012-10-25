@@ -5,9 +5,6 @@
 BACKUP_DIR=/root/backup
 mkdir -p $BACKUP_DIR
 
-# XXX: for s3multiput
-$CKAN_VENV/bin/pip install filechunkio
-
 # Create backup script
 cat > $BACKUP_DIR/backup-db.sh <<EOS
 #!/bin/sh
@@ -30,8 +27,7 @@ if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
 	cat >> $BACKUP_DIR/backup-db.sh <<EOS
 
 # and save it to s3
-# FIXME: using s3multiput until merge of s3put/s3multiput is done for --key_prefix
-$CKAN_VENV/bin/s3multiput --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
+$CKAN_VENV/bin/s3put --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
 
 # and cleanup
 rm \$FILENAME
