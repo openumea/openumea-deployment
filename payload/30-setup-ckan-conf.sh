@@ -5,10 +5,16 @@ cd $CKAN_ROOT
 
 $CKAN_VENV/bin/paster make-config ckan $CKAN_CFG
 
-ln -s $CKAN_VENV/src/ckan/who.ini
-mkdir data sstore
+# we need to touch/chown the logfile so we do it
+# before any paster command creates it as root
 touch ckan.log
-chown www-data . data sstore ckan.log
+chown www-data . ckan.log
+
+# data is the pylons cache
+# sstore is for openid connections
+mkdir data sstore
+chown data sstore
+ln -s $CKAN_VENV/src/ckan/who.ini
 
 # Config hostname
 perl -pi -e "s,^ckan.site_url.*$,ckan.site_url = http://$CKAN_HOSTNAME/," $CKAN_CFG
