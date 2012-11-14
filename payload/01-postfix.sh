@@ -19,7 +19,7 @@ apt-get install -y postfix bsd-mailx
 cat >> /etc/postfix/main.cf <<EOC
 # Chrooted, and this is the one in the chroot
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-sender_canonical_maps = static:$SENDER_EMAIL_ADRESS
+sender_canonical_maps = static:$SENDER_EMAIL_ADDRESS
 recipient_canonical_maps = static:$RECIPENT_EMAIL_ADDRESS
 EOC
 

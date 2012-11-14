@@ -15,7 +15,7 @@ export HOME=$(getent passwd $(id -u) | cut -d: -f 6)
 
 # Email settings
 RECIPENT_EMAIL_ADDRESS=sysadm
-SENDER_EMAIL_ADRESS=root@domain
+SENDER_EMAIL_ADDRESS=root@domain
 #EMAIL_CREDENTIALS=XXXXXXXXXXXXXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 #RELAY_HOST=email-smtp.us-east-1.amazonaws.com:587
 
