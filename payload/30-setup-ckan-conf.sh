@@ -13,7 +13,7 @@ chown www-data . ckan.log
 # data is the pylons cache
 # sstore is for openid connections
 mkdir data sstore
-chown data sstore
+chown www-data data sstore
 ln -s $CKAN_VENV/src/ckan/who.ini
 
 # Config hostname
