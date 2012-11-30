@@ -6,8 +6,8 @@ if [ "$CKAN_THEME" = "" ] ; then
 fi
 
 # XXX: Hardcoded "theme"
-if [ "$CKAN_THEME" = "openumea" ] ; then
-	git clone --branch master git://github.com/openumea/openumea-theme.git $CKAN_ROOT/$CKAN_THEME
+if [ "$CKAN_THEME" = "openumea-theme" ] ; then
+	git clone --branch master git://github.com/openumea/$CKAN_THEME.git $CKAN_ROOT/$CKAN_THEME
 
 	# Configure us to use title and logos
 	perl -pi -e 's/^ckan.site_title.*$/ckan.site_title = OpenUmea/' $CKAN_CFG
@@ -15,6 +15,7 @@ if [ "$CKAN_THEME" = "openumea" ] ; then
 
 	perl -pi -e 's|.*ckan.favicon =.*$|ckan.favicon = /images/icons/UmeaKommun.ico|' $CKAN_CFG
 	perl -pi -e 's|.*ckan.site_logo =.*$|ckan.site_logo = /images/UmeaKommun.png|' $CKAN_CFG
+	perl -pi -e 's|.*ckan.locales_offered =.*$|ckan.locales_offered = en sv|' $CKAN_CFG
 fi
 
 # to make CKAN_THEME available in perl
