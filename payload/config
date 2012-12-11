@@ -50,3 +50,9 @@ CKAN_THEME=openumea-theme
 # or, if we are not restoring a backup, create a initial systadmin:
 CKAN_SYSADMIN_USER=sysadm
 CKAN_SYSADMIN_PW=sysadm
+
+# From what repo should we fetch cronjobs?
+CRONJOBS_REPO=openumea-cronjobs
+
+# And where do we store credentials for cronjobs? eg. cronjobs.cfg
+CREDENTIALS_BUCKET=openumea-credentials

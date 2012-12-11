@@ -33,8 +33,14 @@ Create a iam-role for the ckan-instance like:
         "arn:aws:s3:::CKAN_STORAGE_BUCKET",
         "arn:aws:s3:::CKAN_STORAGE_BUCKET/*",
         "arn:aws:s3:::DB_BACKUP_S3_BUCKET",
-        "arn:aws:s3:::DB_BACKUP_S3_BUCKET/CKAN_HOSTNAME/*"
+        "arn:aws:s3:::DB_BACKUP_S3_BUCKET/CKAN_HOSTNAME/*",
+        "arn:aws:s3:::CREDENTIALS_BUCKET"
       ]
+    },
+    {
+      "Action": "s3:GetObject",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::CREDENTIALS_BUCKET/*"
     },
     {
       "Action": [
