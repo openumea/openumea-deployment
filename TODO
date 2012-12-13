@@ -1,7 +1,9 @@
 Future work:
 
 * Fixup README.txt so its undestrandable
-* Cleanout old backups
-* only send db to s3 if its changed from old backup?
 * Switch to using a released version of boto when one is released with all fixes.
  - Aka first release after 2.6.0
+
+Far future:
+* Rewrite scripts to use puppet
+ - Better to do configuration management, instead of relaying on reinstall?
