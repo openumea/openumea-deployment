@@ -1,11 +1,8 @@
-IMPORTANT
+Important
 =========
-
-This is the AUTHORITATIVE SOURCE of how to setup ckan for OpenUmea
-
-Everything is REQUIRED to be automated and deployable by script.
-
-This is also the DISASTER RECOVERY solution.
+This is the authoritative source of how to setup ckan for OpenUmea
+Everything is required to be automated and deployable by script.
+This is also the disaster recovery solution.
 
 How full deployment works
 =========================
