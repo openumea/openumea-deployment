@@ -1,0 +1,13 @@
+License
+=======
+Deployment scripts for openumea.se
+
+Copyright (C) 2012 Umeå Kommun
+Copyright (C) 2012 Dohi Sweden
+
+This code is developed by Anton Lundin <anton@dohi.se> for the OpenUmea
+project and based uppon other deployment code internaly developed by
+Dohi Sweden.
+
+Licensed under European Union Public License (EUPL) version 1.1, or (at your
+option) any later version. The license can be found at http://www.osor.eu/eupl
