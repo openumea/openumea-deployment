@@ -73,3 +73,22 @@ your combined-userdata.gz as userdata.
 
 Watch your system come up for the fist time, or see your disaster
 recovered.
+
+
+How do I deploy it locally?
+==========================
+There is a make-target to create a nocloud-iso to use cloud-init for
+local deployment in kvm, xen or other virtualization infrastructure.
+
+Grab a image from http://cloud-images.ubuntu.com/precise/current/ in a
+format that fits your environment. You might need to convert the image.
+
+Read the nodes above and fill in the relevant variables in
+payload/config. Then you can generate a "nocloud"-iso containing all
+the initialisation code to start a ckan-instance. This is done by
+running by running "make ckan-test.iso" in the ckan-test-branch.
+Attach that iso to your vm and boot it, and cloud-init will take
+care of initializing and setting up your instance.
+
+Left as a exercise for the reader is to adapt the scripts to use other
+storage than S3 for filestorage.
