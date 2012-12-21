@@ -10,6 +10,7 @@ How full deployment works
 Create elastic-ip and point your dns-name to it, CKAN_HOSTNAME
 
 Create a bucket to store ckan-files in, CKAN_STORAGE_BUCKET
+Enable CORS-access to this bucket. See S3 documentation on this.
 
 If you would like, create a bucket to store database backups, and maybe
 set a life-cycle rule that removes to-old backups. DB_BACKUP_S3_BUCKET
