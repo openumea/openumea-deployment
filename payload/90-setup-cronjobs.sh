@@ -36,7 +36,7 @@ $CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG remove $CRONUSER || 
 $CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG add $CRONUSER apikey=$CRONUSER_API_KEY password=`pwgen 12 1`
 
 # FIXME: how to do automate this? read it from $CRONJOB_CONFIG?
-$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:anlaggningsdata
+$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:recreational-facilities
 $CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:food-inspections
 $CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:radon-surveys
 $CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor system:
