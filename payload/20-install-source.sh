@@ -2,16 +2,17 @@
 . $(dirname $0)/config
 
 virtualenv $CKAN_VENV
-#$CKAN_VENV/bin/pip install --ignore-installed -e git+https://github.com/okfn/ckan.git#egg=ckan
-#$CKAN_VENV/bin/pip install --ignore-installed -e git+https://github.com/okfn/ckan.git@release-v1.8#egg=ckan
+# Grab the release tag from github
 $CKAN_VENV/bin/pip install --ignore-installed -e git+https://github.com/okfn/ckan.git@ckan-v1.8#egg=ckan
+# install its dependencies
 $CKAN_VENV/bin/pip install --ignore-installed -r $CKAN_VENV/src/ckan/pip-requirements.txt
-#$CKAN_VENV/bin/pip install boto 
-$CKAN_VENV/bin/pip install git+https://github.com/boto/boto#egg=boto
+# install a good version of boto.
+# due to bugs in older botos, we grab a minimum of 2.8.0 that we know works
+$CKAN_VENV/bin/pip install boto>=2.8.0
 
-# OPTIONAL
+# OPTIONAL things we don't currently use
 #$CKAN_VENV/bin/pip install celery
 
-# plugins
+# Example on how to install plugins
 #$CKAN_VENV/bin/pip install -e git+git://github.com/okfn/ckanext-datastorer.git#egg=ckanext-datastorer
 #$CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-datastorer/pip-requirements.txt

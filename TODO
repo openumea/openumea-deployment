@@ -1,8 +1,5 @@
 Future work:
-
-* Fixup README.txt so its undestrandable
-* Switch to using a released version of boto when one is released with all fixes.
- - Aka first release after 2.6.0
+* Implement automatic deployment of filestore in "local" mode
 
 Far future:
 * Rewrite scripts to use puppet
