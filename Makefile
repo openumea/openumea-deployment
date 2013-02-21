@@ -32,7 +32,7 @@ clean:
 	@touch $@
 
 meta-data:
-	if [ "$(INSTANCE_NAME)" = "" ] ; then\
+	@if [ "$(INSTANCE_NAME)" = "" ] ; then\
 		echo "DEFINE INSTANCE_NAME!";\
 		exit 1;\
 	fi
