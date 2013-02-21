@@ -14,11 +14,6 @@ debconf_selections: |     # Need to perserve newlines
   debconf debconf/frontend select readline
   debconf debconf/frontend seen false
 
-  # Set timezone
-  tzdata tzdata/Zones/Etc select UTC
-  tzdata tzdata/Zones/Europe select Stockholm
-  tzdata tzdata/Areas select Europe
-
 # Install additional packages on first boot
 #
 # Default: none
@@ -26,25 +21,23 @@ debconf_selections: |     # Need to perserve newlines
 # if packages are specified, this apt_update will be set to true
 #
 packages:
+ - dstat
  - pwgen
  - pastebinit
  - ntp
 
 # runs last, after all other scripts
 runcmd:
-# create missing log dir for upstart
- - [ mkdir, -p, /var/log/upstart ]
-# make the tzdata changes bite
- - [ sh, -ce, "echo Europe/Stockholm > /etc/timezone" ]
- - [ dpkg-reconfigure, --priority, critical, tzdata ]
 # disable landscape
  - [ landscape-config, --disable ]
 # Have popularity contest shut up (generate /etc/popularity-contest.conf)
  - [ dpkg-reconfigure, --priority, high, popularity-contest ]
 # enable unattended-upgrades:
  - [ sh, -ce, "echo APT::Periodic::Unattended-Upgrade \"1\"\\; > /etc/apt/apt.conf.d/01-enable-unattended" ]
-# and run it
- - [ unattended-upgrades ]
+# enable unattended-reboots
+ - [ perl, -pi, -e, "s,^//Unattended-Upgrade::Automatic-Reboot \"false\"\\;$,Unattended-Upgrade::Automatic-Reboot \"true\"\\;,", /etc/apt/apt.conf.d/50unattended-upgrades]
+# if we have recived important patches, reboot
+ - [ sh, -ce, "[ -e /var/run/reboot-required ] && reboot" ]
 
 # We do it from a runcmd and unattended-upgrade instead.
 # Update apt database on first boot
@@ -52,47 +45,25 @@ runcmd:
 #
 # Default: true
 #
-#apt_update: true
+apt_update: true
 
 # Upgrade the instance on first boot
 # (ie run apt-get upgrade)
 #
 # Default: false
 #
-#apt_upgrade: true
+apt_upgrade: true
 
-# E_NOT_IMPL.
-# Use a more "traditional" approach, down in runcmd:
-## enable unattended-upgrades:
-#apt_conf:
-## Creates an apt proxy configuration in /etc/apt/apt.conf.d/01-enable-unattended
-# - filename: "01-enable-unattended"
-#   content: |
-#    APT::Periodic::Unattended-Upgrade "1";
-
-# E_NOT_IMPL AS OF lucid
-#hostname: "cloud-init-templated"
-
-# E_NOT_IMPL AS OF lucid
-# resize_rootfs should the / filesytem be resized on first boot
-# this allows you to launch an instance with a larger disk / partition
-# and have the instance automatically grow / to accomoddate it
-# set to 'False' to disable
-#resize_rootfs: True
-
-# E_NOT_IMPL AS OF lucid
 # final_message
 # default: cloud-init boot finished at $TIMESTAMP. Up $UPTIME seconds
 # this message is written by cloud-final when the system is finished
 # its first boot
-#final_message: "The system is finally up, after $UPTIME seconds"
+final_message: "The system is finally up, after $UPTIME seconds"
 
-# E_NOT_IMPL AS OF lucid
 # timezone: set the timezone for this instance
 # the value of 'timezone' must exist in /usr/share/zoneinfo
-#timezone: Europe/Stockholm
+timezone: Europe/Stockholm
 
-# E_NOT_IMPL AS OF lucid
 # configure where output will go
 # 'output' entry is a dict with 'init', 'config', 'final' or 'all'
 # entries.  Each one defines where
