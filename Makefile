@@ -42,7 +42,17 @@ user-data: combined-userdata.gz
 	cp $^ $@
 
 %.iso: meta-data user-data
-	genisoimage -output $@ -volid cidata -joliet -rock $^
+	@if [ ! "$(shell which genisoimage)" = "" ] ; then \
+		genisoimage -output $@ -volid cidata -joliet -rock $^ ; \
+	elif [ ! "$(shell which hdiutil)" = "" ] ; then \
+		mkdir tmpdir ; \
+		cp $^ tmpdir ; \
+		hdiutil makehybrid -iso -joliet -o $@ -default-volume-name cidata tmpdir ; \
+		rm -rf tmpdir ; \
+		perl -pi -e 's/CIDATA/cidata/' $@ ; \
+	else \
+		echo "I don't know any way to make a iso on this system" ; \
+	fi
 
 push_data: $(IMGS)
 	rsync -v $^ $(SERVER):$(IMG_DIR)
