@@ -21,6 +21,8 @@ if [ ! -z "$CKAN_BACKUP" ] ; then
 	$CKAN_VENV/bin/paster --plugin=ckan db load $CKAN_BACKUP --config=$CKAN_CFG
 	# And upgrade any changes
 	$CKAN_VENV/bin/paster --plugin=ckan db upgrade --config=$CKAN_CFG
+	# And re-index everything
+	$CKAN_VENV/bin/paster --plugin=ckan search-index rebuild -r --config=$CKAN_CFG
 else
 	# init a fesh db
 	$CKAN_VENV/bin/paster --plugin=ckan db init --config=$CKAN_CFG
