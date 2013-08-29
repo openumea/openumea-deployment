@@ -35,7 +35,7 @@ CKAN_VENV=$CKAN_ROOT/pyenv
 CKAN_CFG=$CKAN_ROOT/development.ini
 
 # Should we apply a theme?
-CKAN_THEME=openumea-theme
+#CKAN_THEME=openumea-theme
 
 # To what bucket should we do backup's?
 #DB_BACKUP_S3_BUCKET=

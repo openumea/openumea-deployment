@@ -1,0 +1,20 @@
+How to theme the site with new default style
+============================================
+
+With the new jinja2 templates, we haven't built any new theme, so we just use
+some tricks in the /ckan-admin/config panel.
+
+Here are whats done:
+Site Title: OpenUmea
+Style: Default
+Site Tag Line: Open data from the municipality of Umea
+Site Tag Logo:
+Custom CSS:
+/* Remove the feature image */
+div.hero-primary section.featured.media-overlay {
+display: none;
+}
+/* Fix for broken defaults... */
+div.hero-secondary {
+position: static;
+}
