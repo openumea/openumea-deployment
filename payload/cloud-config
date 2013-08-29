@@ -36,6 +36,7 @@ runcmd:
  - [ sh, -ce, "echo APT::Periodic::Unattended-Upgrade \"1\"\\; > /etc/apt/apt.conf.d/01-enable-unattended" ]
 # enable unattended-reboots
  - [ perl, -pi, -e, "s,^//Unattended-Upgrade::Automatic-Reboot \"false\"\\;$,Unattended-Upgrade::Automatic-Reboot \"true\"\\;,", /etc/apt/apt.conf.d/50unattended-upgrades]
+ - [ perl, -pi, -e, "s,^//Unattended-Upgrade::Remove-Unused-Dependencies \"false\"\\;$,Unattended-Upgrade::Remove-Unused-Dependencies \"true\"\\;,", /etc/apt/apt.conf.d/50unattended-upgrades ]
 # if we have recived important patches, reboot
  - [ sh, -ce, "[ -e /var/run/reboot-required ] && reboot" ]
 
