@@ -2,7 +2,7 @@
 . $(dirname $0)/config
 
 mv /etc/solr/conf/schema.xml /etc/solr/conf/schema.xml.bak
-ln -s $CKAN_VENV/src/ckan/ckan/config/solr/schema-1.4.xml /etc/solr/conf/schema.xml
+ln -s $CKAN_VENV/src/ckan/ckan/config/solr/schema-2.0.xml /etc/solr/conf/schema.xml
 
 perl -pi -e '
 s/^.*NO_START.+$/NO_START=0/;
