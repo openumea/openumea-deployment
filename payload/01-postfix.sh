@@ -15,16 +15,23 @@ fi
 
 apt-get install -y postfix bsd-mailx
 
-# Configure local postfix to relay via SES
-cat >> /etc/postfix/main.cf <<EOC
-# Chrooted, and this is the one in the chroot
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+# Configure local postfix to force email addresses
+if [ ! -z "$SENDER_EMAIL_ADDRESS" ] ; then
+	cat >> /etc/postfix/main.cf <<EOC
 sender_canonical_maps = static:$SENDER_EMAIL_ADDRESS
+EOC
+fi
+
+if [ ! -z "$RECIPENT_EMAIL_ADDRESS" ] ; then
+	cat >> /etc/postfix/main.cf <<EOC
 recipient_canonical_maps = static:$RECIPENT_EMAIL_ADDRESS
 EOC
+fi
 
 if [ ! -z "$EMAIL_CREDENTIALS" ] ; then
 	cat >> /etc/postfix/main.cf <<EOC
+# Chrooted, and this is the one in the chroot
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 smtp_enforce_tls = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_tls_security_options =
