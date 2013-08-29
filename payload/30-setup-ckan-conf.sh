@@ -22,5 +22,8 @@ perl -pi -e "s,^ckan.site_url.*$,ckan.site_url = http://$CKAN_HOSTNAME/," $CKAN_
 # should we use s3-storage?
 if [ ! -z "$CKAN_STORAGE_BUCKET" ] ; then
 	perl -pi -e 's/^.*ofs.impl = s3.*$/ofs.impl = s3/' $CKAN_CFG
-	perl -pi -e "s/^.*ckan.storage.bucket.*$/ckan.storage.bucket = $CKAN_STORAGE_BUCKET/" $CKAN_CFG
+	# in e0cd7ba46e260b503b4090d1a382c5bc5dcf7db8 the stanza in the template disappeared
+	#perl -pi -e "s/^.*ckan.storage.bucket.*$/ckan.storage.bucket = $CKAN_STORAGE_BUCKET/" $CKAN_CFG
+	perl -pi -e 's/^.*ofs.impl = s3.*$/ofs.impl = s3/' $CKAN_CFG
+	perl -pi -e "s/s3$/s3\nckan.storage.bucket = $CKAN_STORAGE_BUCKET/" $CKAN_CFG
 fi
