@@ -1,12 +1,6 @@
 # Add it here or on cmdline
 INSTANCE_NAME=ckan-test
 IMGS=$(INSTANCE_NAME).iso
-ROOT_SIZE=20G
-SERVER=vmserver1.lan
-IMG_DIR=/var/lib/libvirt/images/
-KVM_VG=KVM
-INSTANCE_DISK=/dev/$(KVM_VG)/$(INSTANCE_NAME)
-OS_IMAGE=precise-server-cloudimg-amd64-disk1.img
 
 PAYLOAD=$(shell find payload -maxdepth 1 -type f -not -name .\*)
 CLOUD_CONFIG=$(shell find payload -maxdepth 1 -name \*cloud-config -type f -not -name .\*)
@@ -53,29 +47,3 @@ user-data: combined-userdata.gz
 	else \
 		echo "I don't know any way to make a iso on this system" ; \
 	fi
-
-push_data: $(IMGS)
-	rsync -v $^ $(SERVER):$(IMG_DIR)
-
-$(INSTANCE_NAME).xml: BASE.xml
-	cp $^ $(INSTANCE_NAME).tmp
-	perl -pi -e 's,INSTANCE_NAME,$(INSTANCE_NAME), ; s,INSTANCE_DISK,$(INSTANCE_DISK),' $(INSTANCE_NAME).tmp
-	mv $(INSTANCE_NAME).tmp $(INSTANCE_NAME).xml
-
-vm_create: push_data $(INSTANCE_NAME).xml
-	echo "NOT AVAILABLE"
-	exit -1
-	ssh $(SERVER) lvcreate -L $(ROOT_SIZE) -n $(INSTANCE_NAME) $(KVM_VG)
-	cat $(INSTANCE_NAME).xml | ssh $(SERVER) virsh define /dev/stdin
-	rm $(INSTANCE_NAME).xml
-	make vm_recreate
-
-vm_terminate:
-	ssh $(SERVER) virsh destroy $(INSTANCE_NAME)
-	ssh $(SERVER) virsh undefine $(INSTANCE_NAME)
-	ssh $(SERVER) lvremove -ff $(INSTANCE_DISK)
-
-vm_recreate: push_data
-	ssh $(SERVER) virsh destroy $(INSTANCE_NAME)
-	ssh $(SERVER) qemu-img convert -O host_device $(IMG_DIR)/$(OS_IMAGE) $(INSTANCE_DISK)
-	ssh $(SERVER) virsh start $(INSTANCE_NAME)
