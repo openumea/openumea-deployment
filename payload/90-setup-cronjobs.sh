@@ -33,7 +33,7 @@ fi
 $CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG remove $CRONUSER || :
 
 # And then create user with known apikey and a random unknown password
-$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG add $CRONUSER apikey=$CRONUSER_API_KEY password=`pwgen 12 1`
+$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG add $CRONUSER apikey=$CRONUSER_API_KEY password=`pwgen 12 1` email="$RECIPENT_EMAIL_ADDRESS"
 
 # FIXME: how to do automate this? read it from $CRONJOB_CONFIG?
 $CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:recreational-facilities
