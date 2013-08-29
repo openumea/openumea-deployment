@@ -28,10 +28,6 @@ packages:
 
 # runs last, after all other scripts
 runcmd:
-# disable landscape
- - [ landscape-config, --disable ]
-# Have popularity contest shut up (generate /etc/popularity-contest.conf)
- - [ dpkg-reconfigure, --priority, high, popularity-contest ]
 # enable unattended-upgrades:
  - [ sh, -ce, "echo APT::Periodic::Unattended-Upgrade \"1\"\\; > /etc/apt/apt.conf.d/01-enable-unattended" ]
 # enable unattended-reboots
