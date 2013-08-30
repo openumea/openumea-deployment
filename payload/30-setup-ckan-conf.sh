@@ -27,3 +27,11 @@ if [ ! -z "$CKAN_STORAGE_BUCKET" ] ; then
 	perl -pi -e 's/^.*ofs.impl = s3.*$/ofs.impl = s3/' $CKAN_CFG
 	perl -pi -e "s/s3$/s3\nckan.storage.bucket = $CKAN_STORAGE_BUCKET/" $CKAN_CFG
 fi
+
+if [ ! -z "$RECIPENT_EMAIL_ADDRESS" ] ; then
+	perl -pi -e "s/^.*email_to =.*$/email_to = $RECIPENT_EMAIL_ADDRESS/" $CKAN_CFG
+fi
+
+if [ ! -z "$SENDER_EMAIL_ADDRESS" ] ; then
+	perl -pi -e "s/^.*error_email_from =.*$/error_email_from = $RECIPENT_EMAIL_ADDRESS/" $CKAN_CFG
+fi
