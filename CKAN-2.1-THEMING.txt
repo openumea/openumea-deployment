@@ -7,7 +7,7 @@ some tricks in the /ckan-admin/config panel.
 Here are whats done:
 Site Title: OpenNorth
 Style: Default
-Site Tag Line: Open data from the north of Sweden
+Site Tag Line: Open data from the north of Sweden (testsite)
 Site Tag Logo: //openumea-storage.s3-website-eu-west-1.amazonaws.com/Opennorthlogo.png
 About:
 What was the air quality in 2009? What is the growth in population?
