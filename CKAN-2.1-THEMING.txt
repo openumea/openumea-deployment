@@ -14,6 +14,23 @@ Custom CSS:
 div.hero-primary section.featured.media-overlay {
 display: none;
 }
+/* Style up fron page */
+div.hero-primary header {
+background-image:
+url(http://openumea-storage.s3-website-eu-west-1.amazonaws.com/birches-scaled.jpg);
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+height: 59px;
+padding-top: 42px;
+padding-bottom: 42px;
+border-radius: 3px;
+font-size: 1.4em;
+font-weight: bold;
+color: white;
+text-shadow: 2px 2px 2px black;
+text-align: center;
+}
 /* Fix for broken defaults... */
 div.hero-secondary {
 position: static;
