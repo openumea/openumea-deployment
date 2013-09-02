@@ -19,6 +19,12 @@ ln -s $CKAN_VENV/src/ckan/who.ini
 # Config hostname
 perl -pi -e "s,^ckan.site_url.*$,ckan.site_url = http://$CKAN_HOSTNAME/," $CKAN_CFG
 
+# Don't allow users to change stuff if they are not in a org.
+perl -pi -e "s,^ckan.auth.create_dataset_if_not_in_organization.*$,ckan.auth.create_dataset_if_not_in_organization = false," $CKAN_CFG
+# Don't allow users to create orgs or groups
+perl -pi -e "s,^ckan.auth.user_create_groups*$,ckan.auth.user_create_groups = false," $CKAN_CFG
+perl -pi -e "s,^ckan.auth.user_create_organizations*$,ckan.auth.user_create_organizations = false," $CKAN_CFG
+
 # should we use s3-storage?
 if [ ! -z "$CKAN_STORAGE_BUCKET" ] ; then
 	perl -pi -e 's/^.*ofs.impl = s3.*$/ofs.impl = s3/' $CKAN_CFG
