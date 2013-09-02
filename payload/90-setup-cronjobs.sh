@@ -5,7 +5,6 @@
 cd $CKAN_ROOT
 
 CRONUSER="cronjob"
-CRONUSER_API_KEY=`uuidgen`
 CRONJOB_CONFIG_S3=s3://$CREDENTIALS_BUCKET/cronjob.cfg
 CRONJOB_CONFIG=$CKAN_ROOT/cronjob.cfg
 
@@ -29,17 +28,17 @@ else
 	cp $CKAN_ROOT/$CRONJOBS_REPO/$(basename $CRONJOB_CONFIG) $CRONJOB_CONFIG
 fi
 
-# fist, remove any cronjob user thats restored into the db from backup.
-$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG remove $CRONUSER || :
+CRONUSER_API_KEY=$($CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG $CRONUSER | perl -n -e 'print $1."\n" if m/^.*apikey=([a-zA-Z0-9-]+).*$/')
+# if we don't find a existing cronuser..
+if [ -z "$CRONUSER_API_KEY" ] ; then
+	CRONUSER_API_KEY=`uuidgen`
 
-# And then create user with known apikey and a random unknown password
-$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG add $CRONUSER apikey=$CRONUSER_API_KEY password=`pwgen 12 1` email="$RECIPENT_EMAIL_ADDRESS"
+	# fist, remove any cronjob user thats restored into the db from backup.
+	$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG remove $CRONUSER || :
 
-# FIXME: how to do automate this? read it from $CRONJOB_CONFIG?
-$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:recreational-facilities
-$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:food-inspections
-$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor package:radon-surveys
-$CKAN_VENV/bin/paster --plugin=ckan rights --config=$CKAN_CFG make user:$CRONUSER editor system:
+	# And then create user with known apikey and a random unknown password
+	$CKAN_VENV/bin/paster --plugin=ckan user --config=$CKAN_CFG add $CRONUSER apikey=$CRONUSER_API_KEY password=`pwgen 12 1` email="$RECIPENT_EMAIL_ADDRESS"
+fi
 
 # append the information about this ckan
 cat >> $CRONJOB_CONFIG <<EOC
