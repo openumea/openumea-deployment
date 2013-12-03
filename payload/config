@@ -56,3 +56,6 @@ CRONJOBS_REPO=openumea-cronjobs
 
 # And where do we store credentials for cronjobs? eg. cronjobs.cfg
 CREDENTIALS_BUCKET=openumea-credentials
+
+# Should we enable datastore?
+#DATASTORE=0

@@ -41,3 +41,8 @@ fi
 if [ ! -z "$SENDER_EMAIL_ADDRESS" ] ; then
 	perl -pi -e "s/^.*error_email_from =.*$/error_email_from = $RECIPENT_EMAIL_ADDRESS/" $CKAN_CFG
 fi
+
+# Enable datastore plugin, if we should configure datastore
+if [ "$DATASTORE" = "1" ] ; then
+	perl -pi -e 's/^ckan.plugins = (.*)$/ckan.plugins = $1 datastore/' $CKAN_CFG
+fi
