@@ -27,7 +27,7 @@ if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
 	cat >> $BACKUP_DIR/backup-db.sh <<EOS
 
 # and save it to s3
-$CKAN_VENV/bin/s3put --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
+$CKAN_VENV/bin/s3put --region eu-west-1 --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
 
 # and cleanup
 rm \$FILENAME
@@ -52,7 +52,7 @@ EOS
 		cat >> $BACKUP_DIR/backup-db.sh <<EOS
 
 # and save it to s3
-$CKAN_VENV/bin/s3put --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
+$CKAN_VENV/bin/s3put --region eu-west-1 --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
 
 # and cleanup
 rm \$FILENAME
