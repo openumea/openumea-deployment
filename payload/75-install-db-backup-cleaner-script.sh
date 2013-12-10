@@ -35,11 +35,14 @@ def main():
     """
     s3conn = boto.connect_s3()
     bucket = s3conn.get_bucket(DB_BACKUP_S3_BUCKET)
-    fn_parser = re.compile('^' + CKAN_HOSTNAME + '/ckan-' + \
+    fn_parser = re.compile('^' + CKAN_HOSTNAME + '/(?P<db>ckan|datastore)-' + \
             '(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})-' + \
             '(?P<hour>\d{2}):(?P<minute>\d{2})\.pg_dump\.gz$')
 
-    filelist = []
+    filelist = {
+        'ckan' : [],
+        'datastore' : [],
+    }
 
     for key in bucket.list():
         match = fn_parser.match(key.name)
@@ -47,6 +50,8 @@ def main():
         # some other file in this bucket.
         if match is None:
             continue
+
+        db = match.group("db")
 
         file_date = datetime.datetime(
                 int(match.group("year")),
@@ -56,18 +61,20 @@ def main():
                 int(match.group("minute"))
                 )
 
-        filelist.append((file_date, key))
+        filelist[db].append((file_date, key))
 
     # sort the list according to date
-    filelist.sort(key=lambda obj: obj[0])
+    for db in filelist.keys():
+        filelist[db].sort(key=lambda obj: obj[0])
 
     # skip the N newest
-    for file_date, key in filelist[:-BACKUPS_TO_KEEP]:
-        if not (file_date.hour == 0 and file_date.minute == 0):
-            #print "would delete : " + key.name
-            key.delete()
-        #else:
-            #print "would keep : " + key.name
+    for db in filelist.keys():
+        for file_date, key in filelist[db][:-BACKUPS_TO_KEEP]:
+            if not (file_date.hour == 0 and file_date.minute == 0):
+                #print "would delete : " + key.name
+                key.delete()
+            #else:
+                #print "would keep : " + key.name
 
 
 if __name__ == '__main__':
