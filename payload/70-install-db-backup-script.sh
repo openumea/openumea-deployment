@@ -34,6 +34,32 @@ rm \$FILENAME
 EOS
 fi
 
+if [ "$DATASTORE" = "1" ] ; then
+	cat >> $BACKUP_DIR/backup-db.sh <<EOS
+
+# Create filenme first, thus the date can change if we dump large amounts of data.
+FILENAME="$BACKUP_DIR/datastore-\`date +%Y%m%d-%H:%M\`.pg_dump"
+
+(cd / ; sudo -u postgres pg_dump --clean datastore ) > \$FILENAME
+
+# compress dump
+gzip -9 \$FILENAME
+FILENAME=\$FILENAME.gz
+EOS
+
+	# should we archive?
+	if [ ! "$DB_BACKUP_S3_BUCKET" = "" ] ; then
+		cat >> $BACKUP_DIR/backup-db.sh <<EOS
+
+# and save it to s3
+$CKAN_VENV/bin/s3put --quiet --bucket $DB_BACKUP_S3_BUCKET --prefix=$BACKUP_DIR --key_prefix=$CKAN_HOSTNAME/ \$FILENAME
+
+# and cleanup
+rm \$FILENAME
+EOS
+	fi
+fi
+
 # make it fly
 chmod +x $BACKUP_DIR/backup-db.sh
 
