@@ -14,7 +14,7 @@ Custom CSS:
 div.hero-primary section.featured.media-overlay {
 display: none;
 }
-/* Style up fron page */
+/* Style up front page */
 div.hero-primary header {
 background-image:
 url(http://openumea-storage.s3-website-eu-west-1.amazonaws.com/birches-scaled.jpg);
