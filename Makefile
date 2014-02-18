@@ -8,7 +8,7 @@ GEN=.validate_cloud_config .validate_shell
 
 combined-userdata.gz: $(GEN) $(PAYLOAD)
 	write-mime-multipart --gzip --output=$@ $(PAYLOAD)
-	@if [ $$(du -k $@ | cut -f 1) -gt 16 ] ; then \
+	@if [ $$(perl -e '@x=stat(shift);print $$x[7]' $@) -gt 16384 ] ; then \
 		echo "Huston, we got a size problem" ; \
 		exit 1 ; \
 	fi
