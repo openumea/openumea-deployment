@@ -58,7 +58,7 @@ CRONJOBS_REPO=openumea-cronjobs
 CREDENTIALS_BUCKET=openumea-credentials
 
 # Should we enable datastore?
-#DATASTORE=0
+DATASTORE=1
 
 # Should we restore a datastore backup?
-#DATASTORE_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/datastore-YYYYMMDD-HH:MM.pg_dump.gz"
+DATASTORE_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/datastore-YYYYMMDD-HH:MM.pg_dump.gz"
