@@ -5,33 +5,60 @@ With the new jinja2 templates, we haven't built any new theme, so we just use
 some tricks in the /ckan-admin/config panel.
 
 Here are whats done:
-Site Title: OpenUmea
+Site Title: OpenNorth
 Style: Default
-Site Tag Line: Open data from the municipality of Umea
-Site Tag Logo:
+Site Tag Line: Open data from the north of Sweden
+Site Tag Logo: //openumea-storage.s3-website-eu-west-1.amazonaws.com/Opennorthlogo.png
+About:
+What was the air quality in 2009? What is the growth in population?
+Where can you see publicly-funded art in the centre of the city? Data to
+answer many, many questions like these is out there on the Internet
+somewhere - but it is not always easy to find.
+
+Opennorth is our, the municipality of Skelleftea, the municipality of
+Umea, Lulea techniacl university and Umea university's, catalogue of
+useful sets of data on the Internet. You can collect links here to data
+from around the web for yourself and others to use, or search for data
+that others have collected. Depending on the type of data (and its
+conditions of use), Opennorth may also be able to store a copy of the
+data or host it in a database, and provide some basic visualisation
+tools.
+
+Use the data and the power of ITC an create something that improves the
+life of the citizens! Commercial or non-commercial services or products
+does not matter.
+
+Suggestions or ideas regarding what data we should provide or how the
+site should work? Please mail us on info@opennorth.se! You can write in
+swedish or english.
+Intro Text:
+Open data from the municipalities and
+universities in the north of Sweden.
+
+What will you make of it?
 Custom CSS:
 /* Remove the feature image */
 div.hero-primary section.featured.media-overlay {
-display: none;
+	display: none;
 }
 /* Style up front page */
 div.hero-primary header {
-background-image:
-url(http://openumea-storage.s3-website-eu-west-1.amazonaws.com/birches-scaled.jpg);
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
-height: 59px;
-padding-top: 42px;
-padding-bottom: 42px;
-border-radius: 3px;
-font-size: 1.4em;
-font-weight: bold;
-color: white;
-text-shadow: 2px 2px 2px black;
-text-align: center;
+	background-image:
+	url(http://openumea-storage.s3-website-eu-west-1.amazonaws.com/birches-scaled.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 59px;
+	padding-top: 42px;
+	padding-bottom: 42px;
+	border-radius: 3px;
+	font-size: 1.4em;
+	font-weight: bold;
+	color: white;
+	text-shadow: 0px 0px 20px black;
+	text-align: center;
 }
 /* Fix for broken defaults... */
 div.hero-secondary {
-position: static;
+	position: static;
 }
