@@ -26,7 +26,7 @@ fileConfig(config_filepath)
 application = loadapp('config:%s' % config_filepath)
 EOP
 
-cat >> /etc/apache2/sites-available/ckan <<EOC
+cat >> /etc/apache2/sites-available/ckan.conf <<EOC
 <VirtualHost *:80>
 	ServerName $CKAN_HOSTNAME
 	ServerAdmin $RECIPENT_EMAIL_ADDRESS
@@ -39,7 +39,16 @@ cat >> /etc/apache2/sites-available/ckan <<EOC
 EOC
 
 # disable default site and enable ckan
-a2dissite default
+a2dissite 000-default
+
+# The wsgi module doesn't work with mpm_event, use mpm_worker instead
+a2dismod mpm_event
+a2enmod mpm_worker
+
+# Enable the wsgi module
+a2enmod wsgi
+
+# Enable the vhost for ckan
 a2ensite ckan
 
 # reload config to have it bite
