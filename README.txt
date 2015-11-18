@@ -81,7 +81,7 @@ How do I deploy it locally?
 There is a make-target to create a nocloud-iso to use cloud-init for
 local deployment in kvm, xen or other virtualization infrastructure.
 
-Grab a image from http://cloud-images.ubuntu.com/precise/current/ in a
+Grab a image from http://cloud-images.ubuntu.com/trusty/current/ in a
 format that fits your environment. You might need to convert the image.
 
 Read the nodes above and fill in the relevant variables in
