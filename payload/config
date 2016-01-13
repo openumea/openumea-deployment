@@ -62,3 +62,11 @@ CREDENTIALS_BUCKET=openumea-credentials
 
 # Should we restore a datastore backup?
 #DATASTORE_BACKUP="s3://$DB_BACKUP_S3_BUCKET/$CKAN_HOSTNAME/datastore-YYYYMMDD-HH:MM.pg_dump.gz"
+
+# Should we install the RDF to HTML ckan extension?
+ENABLE_CKAN_RDF_TO_HTML=0
+# API key with write access to the dataset you want to automatically update with RDF data
+# XXX: DO NOT COMMIT THIS TO THE REPOSITORY
+CKAN_API_KEY=
+# URL to RDF file
+RDF_URL=http://openumea.se/datasets/dcat.rdf
